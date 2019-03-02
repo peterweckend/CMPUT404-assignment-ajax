@@ -9,7 +9,11 @@ Make a shared state AJAX drawing program
 
 Contributors / Licensing
 ========================
+Some XML HTTP Request code in index.html inspired by examples at http://youmightnotneedjquery.com/
 
-Generally everything is LICENSE'D under the Apache 2 license by Abram Hindle.
+
+The drawn smiley face code is inspired by an example from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes
+
+Generally everything is LICENSE'D under the Apache 2 license by Abram Hindle and Peter Weckend.
 
 

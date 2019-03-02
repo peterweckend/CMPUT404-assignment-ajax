@@ -30,8 +30,6 @@ var host = window.location.host;
 var context = canvas.getContext("2d");
 var W = canvas.width  = window.innerWidth-6;
 var H = canvas.height = window.innerHeight-50;
-var colorSet = false;
-var currentColor = "";
 
 function findRandomHexColor() {
     const hexVals = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'];
@@ -67,6 +65,7 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
     };
     //XXX: POST to a URL
     //XXX: set the mimetype and the accept headers!
+    // Remember to use application/json !
     if (objects == null) { // GET
         xhr.open("GET", url, true);
         xhr.send();
@@ -77,15 +76,13 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
         xhr.send(JSON.stringify(objects));
 
     }
-
-
-    // Remember to use application/json !
 }
 
 
 world = {};
 
 //XXX: TODO Make this prettier!
+// modified from https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes
 function drawCircle(context,entity) {
     with(context) {
         beginPath();              
@@ -95,7 +92,15 @@ function drawCircle(context,entity) {
         //moveTo(x,y);
         fillStyle = entity["colour"];
         strokeStyle = fillStyle;
-        arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, false);  
+
+        // make a smiley face :)
+        arc(x, y, 50, 0, Math.PI * 2, true); // Outer circle
+        moveTo(x+35, y);
+        arc(x, y, 35, 0, Math.PI, false);  // Mouth (clockwise)
+        moveTo(x-10, y-10);
+        arc(x-15, y-10, 5, 0, Math.PI * 2, true);  // Left eye
+        moveTo(x+20, y-10);
+        arc(x+15, y-10, 5, 0, Math.PI * 2, true);  // Right eye
         stroke();                                
     }
 }
@@ -279,14 +284,15 @@ mouse = (function() {
 // Add the application specific mouse listeners!
 //XXX: TODO Make these prettier!
 mouse.mousedowners.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'blue'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'white'});
 });
 
 mouse.mouseuppers.push(function(x,y,clicked,e) {
-    addEntityWithoutName({'x':x,'y':y,'colour':'red'});
+    addEntityWithoutName({'x':x,'y':y,'colour':'white'});
 });
 
 mouse.mousedraggers.push(function(x,y,clicked,e) {
+    // calls a function that randomly generates a hex color
     addEntityWithoutName({'x':x,'y':y,'colour':findRandomHexColor(),
                           'radius':10});
 });
