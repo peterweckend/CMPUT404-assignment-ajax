@@ -3,6 +3,8 @@ CMPUT404-assignment-ajax
 
 CMPUT404-assignment-ajax
 
+_NOTE: The VM by default does not include flask. You must run `pip install flask` in order for it to work._
+
 See requirements.org (plain-text) for a description of the project.
 
 Make a shared state AJAX drawing program
